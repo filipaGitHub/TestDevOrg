@@ -32,8 +32,8 @@ jobs:
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all
           git checkout -b pr
-          git --no-pager diff --name-status pr origin/statging
-          sgd --to pr --from origin/staging --repo . --output .
+          git --no-pager diff --name-status staging origin/master
+          sgd --to staging --from origin/master --repo . --output .
           cat package/package.xml  
 
       # Grabs the force-app folder and it's converting and deploying the whole folder
