@@ -25,15 +25,20 @@ jobs:
       - uses: sfdx-actions/setup-sfdx@v1
         with:
           sfdx-auth-url: ${{ secrets.AUTH_SECRET }}
-        
+         
+      # Runs the installation of the App
+      # Then just fixes some remote references
+      # Creates a new branch (pr) out of the branch we are at
+      # Compare branches (sgd)
+      # Cat prints out the content of that package to be sure it's there
       - name: Install App and Create Delta
         run: |
           sudo npm install sfdx-git-delta@latest -g
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all
           git checkout -b pr
-          git --no-pager diff --name-status pr origin/statging
-          sgd --to pr --from origin/staging --repo . --output .
+          git --no-pager diff --name-status pr origin/staging
+          sgd --to staging --from origin/staging --repo . --output .
           cat package/package.xml  
 
       # Grabs the force-app folder and it's converting and deploying the whole folder
