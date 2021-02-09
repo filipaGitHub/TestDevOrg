@@ -6,7 +6,7 @@ name: Checkonly from DEV to UAT
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   pull_request:
-    branches: [ UAT Filipa ]
+    branches: [ UAT-Filipa ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,8 +28,8 @@ jobs:
           sudo npm install sfdx-git-delta@latest -g
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all
-          git --no-pager diff --name-status DEV Filipa origin/UAT Filipa
-          sgd --to DEV Filipa --from origin/UAT Filipa --repo . --output .
+          git --no-pager diff --name-status DEV-Filipa origin/UAT-Filipa
+          sgd --to DEV-Filipa --from origin/UAT-Filipa --repo . --output .
           cat package/package.xml
           
       # Grabs the force-app folder and it's converting and deploying the whole folder
