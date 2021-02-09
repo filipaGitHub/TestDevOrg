@@ -1,5 +1,5 @@
 
-name: CI
+name: CI - authenticate
 
 # Controls when the action will run. 
 on:
