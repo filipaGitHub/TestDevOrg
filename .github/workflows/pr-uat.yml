@@ -1,0 +1,27 @@
+name: SFDX Test Run on Push
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  pull_request:
+    branches: [ uat ]
+
+jobs:
+  test:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: sfdx-actions/setup-sfdx@v1
+        with:
+          sfdx-auth-url: ${{ secrets.AUTH_SECRET }}
+      - name: sfdx-test-run
+        run: sfdx force:apex:test:run -l RunLocalTests -w 30
+        
+       # Getting source format and convert it to metadata
+      - name: 'Convert Metadata'
+        run: sfdx force:source:convert --rootdir=force-app --outputdir=convert
+      
+      # It's going to deploy the code one is pushed on a target org
+      - name: 'Run Test on Metadata'
+        run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=RunLocalTests
