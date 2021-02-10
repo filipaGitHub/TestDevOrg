@@ -30,7 +30,7 @@ jobs:
       # sudo npm install sfdx-git-delta@latest -g  
       - name: Install App and Create Delta
         run: |
-          sfdx plugins:install sfdx-git-delta
+          echo yes | sfdx plugins:install sfdx-git-delta
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all
           git checkout -b pr
